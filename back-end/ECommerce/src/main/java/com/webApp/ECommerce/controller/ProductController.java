@@ -3,6 +3,8 @@ package com.webApp.ECommerce.controller;
 import com.webApp.ECommerce.model.Product;
 import com.webApp.ECommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,27 +17,27 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts() {
+        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/{prodId}")
-    public Product getProduct(@PathVariable int prodId) {
-        return productService.getProduct(prodId);
+    public ResponseEntity<Product> getProduct(@PathVariable int prodId) {
+        return new ResponseEntity<>(productService.getProduct(prodId), HttpStatus.OK);
     }
 
     @PostMapping("/add-product")
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        return new ResponseEntity<>(productService.addProduct(product), HttpStatus.CREATED);
     }
 
     @PutMapping("/{prodId}")
-    public Product updateProduct(@PathVariable int prodId, @RequestBody Product product) {
-        return productService.updateProduct(prodId, product);
+    public ResponseEntity<Product> updateProduct(@PathVariable int prodId, @RequestBody Product product) {
+        return new ResponseEntity<>(productService.updateProduct(prodId, product), HttpStatus.OK);
     }
 
     @DeleteMapping("/{prodId}")
-    public String deleteProduct(@PathVariable int prodId) {
-        return productService.deleteProduct(prodId);
+    public ResponseEntity<String> deleteProduct(@PathVariable int prodId) {
+        return new ResponseEntity<>(productService.deleteProduct(prodId), HttpStatus.NO_CONTENT);
     }
 }
